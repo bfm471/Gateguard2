@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>GateGuard - verify your tickets</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <!-- <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script> -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script> -->
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        const GateGuard = () => {
+            const [ticketnumber, setTicketNumber] = React.useState('');
+            const [ticket, setTicket] = React.useState('');
+
+            const handleCheck = () => {
+                fetch(`http://localhost:8080/liput?code=${ticketnumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setTicket(data)
+                })
+                .catch(error => console.error(error))
+            };
+
+            return (
+                <div>
+                    <h1>GateGuard</h1>
+                    Ticket number <br />
+                    <input type="text" value={ticketnumber} onChange={(event) => setTicketNumber(event.target.value)} />
+                    <p><button onClick={handleCheck}>Check</button></p>
+                    
+                </div>
+            )
+
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<GateGuard />);
+
+    </script>
+</body>
+
+</html>
