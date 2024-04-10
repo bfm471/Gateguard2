@@ -20,25 +20,53 @@
 
         const GateGuard = () => {
             const [ticketnumber, setTicketNumber] = React.useState('');
-            const [ticket, setTicket] = React.useState('');
+            const [ticket, setTicket] = React.useState();
 
             const handleCheck = () => {
-                fetch(`http://localhost:8080/liput?code=${ticketnumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    setTicket(data)
+                // fetch(`http://localhost:8080/liput?code=${ticketnumber}`)
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         console.log(data)
+                //         setTicket(data)
+                //     })
+                //     .catch(error => console.error(error))
+                setTicket({
+                    tapahtuman_nimi: "Sukankudontakilpailu",
+                    alku: "2024-05-31T14:00:00",
+                    lipputyyppi: "perus",
+                    kaytetty: ''
                 })
-                .catch(error => console.error(error))
+                setTicketNumber('');
             };
+
+            const handleMerkitseKaytetyksi = () => {
+                
+                setTicket(null);
+            }
 
             return (
                 <div>
                     <h1>GateGuard</h1>
                     Ticket number <br />
-                    <input type="text" value={ticketnumber} onChange={(event) => setTicketNumber(event.target.value)} />
-                    <p><button onClick={handleCheck}>Check</button></p>
-                    
+                    <input type="text"
+                        value={ticketnumber}
+                        onChange={(event) => setTicketNumber(event.target.value)} 
+                        />
+                    <p>
+                        <button onClick={handleCheck}>Check</button>
+                    </p>
+                    {ticket != null &&
+                        <div>
+                            <h5>Lipun tiedot</h5>
+                            Tapahtuma: {ticket.tapahtuman_nimi}<br />
+                            Aika: {ticket.alku}<br />
+                            Lipputyyppi: {ticket.lipputyyppi} <br />
+                            Käytetty: {ticket.kaytetty}<br />
+                            <p>
+                                <button onClick={handleMerkitseKaytetyksi}>Merkitse käytetyksi</button>
+                            </p>
+                        </div>
+                    }
                 </div>
             )
 
