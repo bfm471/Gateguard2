@@ -22,15 +22,18 @@
             const [ticketnumber, setTicketNumber] = React.useState('');
             const [ticket, setTicket] = React.useState();
 
+            let baseURL = 'http://lipunmyyntijarjestelma-ohjelmistoprojekti-1.rahtiapp.fi';
+
             const handleCheck = () => {
-                // fetch(`http://localhost:8080/liput?code=${ticketnumber}`)
+                // fetch(`${baseURL}/liput?code=${ticketnumber}`)
                 //     .then(response => response.json())
                 //     .then(data => {
-                //         console.log(data)
                 //         setTicket(data)
                 //     })
                 //     .catch(error => console.error(error))
+
                 setTicket({
+                    id: 10,
                     tapahtuman_nimi: "Sukankudontakilpailu",
                     alku: "2024-05-31T14:00:00",
                     lipputyyppi: "perus",
@@ -40,7 +43,19 @@
             };
 
             const handleMerkitseKaytetyksi = () => {
-                
+                let nyt = new Date();
+                nyt = nyt.toISOString().slice(0, 19).replace('T', ' ');
+                console.log(nyt)
+                // fetch(`${baseURL}/liput/${ticket.id}`, {
+                //     method: 'PATCH',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ kaytetty: '' }),
+                // })
+                // .then(response => response.json())
+                // .then(data => console.log(data))
+                // .catch(error => console.error('Virhe: ', error))
                 setTicket(null);
             }
 
